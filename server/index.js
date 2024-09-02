@@ -14,8 +14,8 @@ async function connectDB() {
     await client.connect();
     console.log('Connected to MongoDB');
 
-    const db = client.db('nome_do_banco');
-    collection = db.collection('nome_da_coleção');
+    const db = client.db('veiculos');
+    collection = db.collection('car');
 
   } catch (err) {
     console.error('Failed to connect to MongoDB', err);
@@ -27,48 +27,48 @@ connectDB();
 app.use(express.json()); 
 
 
-app.post('/matriculas', async (req, res) => {
+app.post('/veiculo', async (req, res) => {
   try {
-    const novaMatricula = req.body;
+    const novoVeiculo = req.body;
 
-    const result = await collection.insertOne(novaMatricula)
+    const result = await collection.insertOne(novoVeiculo)
     
-    res.status(201).json({ message: 'Matrícula criada com sucesso', matriculaId: result.insertedId });
+    res.status(201).json({ message: 'Veiculo registrado com sucesso', veiculoId: result.insertedId });
   } catch (err) {
     res.status(500).json({ message: 'Erro ao criar matrícula', error: err });
   }
 });
 
-app.get('/matriculas', async (req, res) => {
+app.get('/veiculo', async (req, res) => {
   try {
-    const matriculas = await collection.find().toArray()
-    res.status(200).json(matriculas);
+    const veiculo = await collection.find().toArray()
+    res.status(200).json(veiculo);
   } catch (err) {
-    res.status(500).json({ message: 'Erro ao buscar matrículas', error: err });
+    res.status(500).json({ message: 'Erro ao buscar veiculo', error: err });
   }
 });
 
 const { ObjectId } = require('mongodb');
 
-app.get('/matriculas/:id', async (req, res) => {
+app.get('/veiculo/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const newId =  new ObjectId(id);
 
-    const matricula = await collection.findOne({ _id: newId });
+    const veiculo = await collection.findOne({ _id: newId });
 
 
-    if (!matricula) {
-      res.status(404).json({ message: 'Matrícula não encontrada' });
+    if (!veiculo) {
+      res.status(404).json({ message: 'Veiculo não encontrada' });
     } else {
-      res.status(200).json(matricula);
+      res.status(200).json(veiculo);
     }
   } catch (err) {
-    res.status(500).json({ message: 'Erro ao buscar matrícula', error: err });
+    res.status(500).json({ message: 'Erro ao buscar veiculo', error: err });
   }
 });
 
-app.put('/matriculas/:id', async (req, res) => {
+app.put('/veiculo/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const newId =  new ObjectId(id);
@@ -77,16 +77,16 @@ app.put('/matriculas/:id', async (req, res) => {
     const result = await collection.updateOne( { _id: newId }, { $set: atualizacao })
 
     if (result.matchedCount === 0) {
-      res.status(404).json({ message: 'Matrícula não encontrada' });
+      res.status(404).json({ message: 'veiculo não encontrada' });
     } else {
-      res.status(200).json({ message: 'Matrícula atualizada com sucesso' });
+      res.status(200).json({ message: 'veiculo atualizado com sucesso' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Erro ao atualizar matrícula', error: err });
+    res.status(500).json({ message: 'Erro ao atualizar veiculo', error: err });
   }
 });
 
-app.delete('/matriculas/:id', async (req, res) => {
+app.delete('/veiculo/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const newId =  new ObjectId(id);
@@ -94,12 +94,12 @@ app.delete('/matriculas/:id', async (req, res) => {
      const result = await collection.deleteOne({ _id: newId })
 
     if (result.deletedCount === 0) {
-      res.status(404).json({ message: 'Matrícula não encontrada' });
+      res.status(404).json({ message: 'veiculo não encontrada' });
     } else {
-      res.status(200).json({ message: 'Matrícula excluída com sucesso' });
+      res.status(200).json({ message: 'veiculo excluido com sucesso' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Erro ao excluir matrícula', error: err });
+    res.status(500).json({ message: 'Erro ao excluir veiculo', error: err });
   }
 });
 

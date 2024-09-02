@@ -52,7 +52,7 @@ body {
   
   .form-container button {
     padding: 10px;
-    background-color: #007bff;
+    background-color:#028db8b7;
     color: white;
     border: none;
     border-radius: 4px;
@@ -149,7 +149,7 @@ body {
     justify-content: center;
     width: 200px;
     height: 200px;
-    background-color: #409706b7;
+    background-color: #028db8b7;
     color: white;
     border-radius: 8px;
     text-decoration: none;
@@ -162,3 +162,18 @@ body {
   .card:hover {
     background-color: #0056b3;
   }
+
+.nav{
+  margin: 0%;
+  padding: 0%;
+  color: white;
+  background-color: #028db8b7;
+  display: flex;
+  justify-content: center;
+}
+.footer{
+  display: flex;
+  justify-content: center;
+  background-color: #028db8b7;
+  color: white;
+}
